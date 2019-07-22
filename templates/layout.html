@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>BTG wallet</title>
+        <!-- Styles -->
+        <link href="{{ url_for('static', filename='css/lib/weather-icons.css') }}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/lib/owl.carousel.min.css') }}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/lib/owl.theme.default.min.css') }}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/lib/font-awesome.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/lib/themify-icons.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/lib/menubar/sidebar.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/lib/bootstrap.min.css') }}" rel="stylesheet">
+        
+
+        <link href="{{ url_for('static', filename='css/lib/helper.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    </head>
+
+    <body>
+            <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+                    <div class="nano">
+                        <div class="nano-content">
+                            <div class="logo"><a href="/"><!-- <img src="assets/images/logo.png" alt="" /> --><span>BTG wallet</span></a></div>
+                            <ul>
+                                <li class="label">Home</li>
+                                <li class="active"><a class="sidebar-sub-toggle"><i class="ti-home"></i> Carteira <span class="badge badge-primary"></span> <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                                    <ul>
+                                        <li><a href="/">Saldo</a></li>
+                                        <li><a href="/">Extrato</a></li>
+                                        <li><a href="/boleto">Pagamentos</a></li>
+                                        <li><a href="/transact">Transferências</a></li>  
+                                        <li><a href="/">Empréstimos</a></li>    
+                                    </ul>
+                                </li>
+                                <li><a><i class="ti-close"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# sidebar -->
+                <div class="header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="float-left">
+                                    <div class="hamburger sidebar-toggle">
+                                        <span class="line"></span>
+                                        <span class="line"></span>
+                                        <span class="line"></span>
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <ul>
+                                        <li class="header-icon dib"><i class="ti-bell"></i>
+                                            <div class="drop-down">
+                                                <div class="dropdown-content-heading">
+                                                    <span class="text-left">Nenhuma notificação</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="header-icon dib"><i class="ti-email"></i>
+                                            <div class="drop-down">
+                                                <div class="dropdown-content-heading">
+                                                    <span class="text-left">Mensagens</span>
+                                                    <a href="/"><i class="ti-pencil-alt pull-right"></i></a>
+                                                </div>
+                                                <div class="dropdown-content-body">
+                                                    <ul>
+                                                            <a href="/">
+                                                        <div class="notification-content">
+                                                            <div class="notification-text">0 novas mensagens</div>
+                                                        </div>
+                                                    </a>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="header-icon dib"><span class="user-avatar">Joaquim <i class="ti-angle-down f-s-10"></i></span>
+                                            <div class="drop-down dropdown-profile">
+                                                <div class="dropdown-content-body">
+                                                    <ul>
+                                                        <li><a href="/"><i class="ti-user"></i> <span>Perfil</span></a></li>
+                                                        <li><a href="/"><i class="ti-email"></i> <span>Inbox</span></a></li>
+                                                        <li><a href="/"><i class="ti-settings"></i> <span>Configurações</span></a></li>
+                                                        <li><a href="/"><i class="ti-power-off"></i> <span>Sair</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% block body %}{% endblock %}
+        <script src="static/js/lib/jquery.min.js"></script>
+        <script src="static/js/lib/jquery.nanoscroller.min.js"></script>
+        <!-- nano scrstatic/oller -->
+        <script src="static/js/lib/menubar/sidebar.js"></script>
+        <script src="static/js/lib/preloader/pace.min.js"></script>
+        <!-- sidebar static/-->
+        <script src="static/js/lib/bootstrap.min.js"></script>
+
+        <!-- bootstrastatic/p -->
+        <script src="static/js/lib/circle-progress/circle-progress.min.js"></script>
+        <script src="static/js/lib/circle-progress/circle-progress-init.js"></script>
+    </body>
+</html>

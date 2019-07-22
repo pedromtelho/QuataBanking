@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="row">
+    
+        <div class="input-field col s5" style="text-align: center; margin-top: 10%;">
+        <!-- <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+        <label for="first_name">First Name</label> -->
+        <form method="POST">
+                <input type="text" placeholder="Carteira de destino"/> 
+        </form>
+        </div>
+</div>
+<div class="row">
+        <div class="input-field col s5" style="text-align: center;">
+            <!-- <input id="last_name" type="text" class="validate">
+            <label for="last_name">Last Name</label> -->
+            <form method="POST">
+                <input type="text" placeholder="Valor"/> 
+            </form>
+            <div>
+                <button href="/sucesso"style="text-align: center;">TRANSACIONAR</button>
+            </div>
+        </div>
+</div>
+
+    
+{% endblock %}
