@@ -1,0 +1,104 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 p-r-0 title-margin-right">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h1>Olá {{account}}, <span>bem vindo a BTG wallet</span></h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                    <div class="col-lg-4 p-l-0 title-margin-left">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Carteira</a></li>
+                                    <li class="breadcrumb-item active">Home</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                </div>
+                <!-- /# row -->
+                <section id="main-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="stat-widget-two">
+                                    <div class="stat-content">
+                                        <div class="stat-text">Saldo </div>
+                                        <div class="stat-digit"> <i class="fa fa-usd"></i>{{results.balance}}</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success w-100" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="stat-widget-two">
+                                    <div class="stat-content">
+                                        <div class="stat-text">Gasto do dia</div>
+                                        <div class="stat-digit"> <i class="fa fa-usd"></i>{{results.daySpent}}</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-danger w-100" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /# card -->
+                        </div>
+                        <!-- /# column -->
+                    </div>
+                    <!-- /# row -->
+
+
+                    <!-- <div class="row"> -->
+                        <!-- column -->
+                        <!-- <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Sales Overview</h4>
+                                    <div id="morris-bar-chart"></div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- column -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card text-center">
+                                <div class="m-t-10">
+                                    <p>Feedback financeiro de transações</p>
+                                    <h5>{{results.monthTransact}} durante o mês</h5>
+                                </div>
+                                <div class="widget-card-circle pr m-t-20 m-b-20" id="info-circle-card">
+                                    <i class="ti-control-shuffle pa"></i>
+                                </div>
+                                <ul class="widget-line-list m-b-15">
+                                    <li class="border-right">92% <br><span class="color-success"><i class="ti-hand-point-up"></i> Positivo</span></li>
+                                    <li>8% <br><span class="color-danger"><i class="ti-hand-point-down"></i>Negativo</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                                      
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="footer">
+                                <p>2019 © BTG wallet primeiro desafio. - <a href="#">www.btgwallet.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}
