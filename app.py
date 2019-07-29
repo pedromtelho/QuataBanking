@@ -5,11 +5,11 @@ from datetime import datetime
 import access 
 
 app = Flask(__name__)
-url = "https://www.btgpactual.com/btgcode/api/money-movement"
+# url = "https://www.btgpactual.com/btgcode/api/money-movement"
 
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
@@ -19,7 +19,7 @@ def login():
             error = 'Chave inválida. Tente novamente.'            
     return render_template('login.html', error=error)
 
-@app.route('/')
+@app.route('/home')
 def home():
     balance = 10000
     daySpent = 0
