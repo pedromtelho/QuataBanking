@@ -3,7 +3,7 @@ import requests
 
 BASIC_URL = 'http://www.btgpactual.com/btgcode/api/'
 
-def calcula_juros(conta):
+def calcula_juros():
 	conta = 'X6XPMTOUOvmh4xzKHvbS6OKLPEYMHEh985pcHJD0'
 	juros_total = 0
 	lista_bancos = ["banco1","banco2","banco3"]

@@ -9,8 +9,6 @@ import investments as inv
 app = Flask(__name__)
 # url = "https://www.btgpactual.com/btgcode/api/money-movement"
 
-person_id = ''
-
 @app.route('/', methods=['GET', 'POST'])
 def login():
 	error = None
@@ -81,7 +79,7 @@ def Transact():
 
 @app.route('/juros')
 def Juros():
-	total = inv.calcula_juros(person_id)
+	total = inv.calcula_juros()
 	return total
 
 
