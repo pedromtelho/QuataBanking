@@ -7,7 +7,7 @@
                     <div class="col-lg-8 p-r-0 title-margin-right">
                         <div class="page-header">
                             <div class="page-title">
-                                <h1>Olá {{account}}, <span>bem vindo ao QuataBanking</span></h1>
+                                <h1>Olá {{results.nome}}, <span>bem vindo a BTG wallet</span></h1>
                             </div>
                         </div>
                     </div>
@@ -25,21 +25,16 @@
                     <!-- /# column -->
                 </div>
                 <!-- /# row -->
-                <section id="main-content">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="stat-widget-two">
-                                    <div class="stat-content">
-                                        <div class="stat-text">Saldo </div>
-                                        <div class="stat-digit"> <i class="fa fa-usd"></i>{{results.balance}}</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-success w-100" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card text-center">
+                            <div class="m-t-10">
+                                <p>Saldo</p>
+                                <h3>{{results.balance}} R$</h3>
                             </div>
+                            <div class="widget-card-circle pr m-t-20 m-b-20" id="info-circle-card"></div>
                         </div>
+                    </div>
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="stat-widget-two">
@@ -53,24 +48,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card text-center">
-                                <div class="m-t-10">
-                                    <p>Feedback financeiro de transações</p>
-                                    <h5>{{results.monthTransact}} durante o mês</h5>
-                                </div>
-                                <div class="widget-card-circle pr m-t-20 m-b-20" id="info-circle-card">
-                                    <i class="ti-control-shuffle pa"></i>
-                                </div>
-                                <ul class="widget-line-list m-b-15">
-                                    <li class="border-right">92% <br><span class="color-success"><i class="ti-hand-point-up"></i> Positivo</span></li>
-                                    <li>8% <br><span class="color-danger"><i class="ti-hand-point-down"></i>Negativo</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                                      
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
