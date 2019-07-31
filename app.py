@@ -4,40 +4,9 @@ import requests
 from datetime import datetime
 import access 
 
-
-key = "WAOpEqyHHL6iBASAssi1I63oP4VRxqjqafcJMzYo"
 app = Flask(__name__)
 # url = "https://www.btgpactual.com/btgcode/api/money-movement"
 
-def conta(carteira):
-    lista_bancos = ["banco1","banco2","banco3"]
-    lista_responses = []
-    for banco in lista_bancos:
-
-        url = "http://www.btgpactual.com/btgcode/api/"+ banco +"/accounts/"+ carteira
-
-        headers = {
-            'x-api-key': carteira
-            }
-
-        response = requests.request("GET", url, headers=headers)
-        if response.json() != "Acesso não encontrado":
-            lista_responses.append(response.json()[0])
-
-    return lista_responses
-
-def pega_dados(lista_js):
-    for e in lista_js:
-        banco = e.get("Bank")
-        soma = e.get("Amount")
-        nome = e.get("Name")
-    return banco, soma, nome
-
-@app.route('/')
-def mainpage():
-    global key
-    lista_bancos = conta(key)
-    banco, balance,nome = pega_dados(lista_bancos)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -58,10 +27,9 @@ def home():
     day = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     templateData = {
-			      'balance' : balance,
-            'daySpent': 0,
-            'monthTransact' : 0,
-            'nome': nome
+        'balance' : balance,
+        'daySpent': daySpent,
+        'monthTransact' : monthTransact
     }
     return render_template('home.html', results=templateData)
 
