@@ -21,8 +21,17 @@ def conta(carteira):
 
         response = requests.request("GET", url, headers=headers)
         if response.json() != "Acesso não encontrado":
-            lista_responses.append(response.json())
+            lista_responses.append(response.json()[0])
 
     return lista_responses
 
-print(conta(carteira))
+def pega_dados(lista_js):
+    for e in lista_js:
+        banco = e.get("Bank")
+        soma = e.get("Amount")
+        nome = e.get("Name")
+    return banco, soma, nome
+
+haha = (conta(carteira))
+
+print(pega_dados(haha))

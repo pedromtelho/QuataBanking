@@ -1,6 +1,6 @@
 import requests
 
-url = "http://www.btgpactual.com/btgcode/api/banco1/money-movement"
+url = "http://www.btgpactual.com/btgcode/api/banco3/money-movement"
 
 payload = "{\r\n    \"Account\": \"WAOpEqyHHL6iBASAssi1I63oP4VRxqjqafcJMzYo\",\r\n    \"Amount\": 4,\r\n    \"Counterpart\": \"tuERPHixmI55KR0sEm32n1AF72mq1rJnaubqamc1\",\r\n    \"Desc\": \"Teste\"\r\n }"
 headers = {
