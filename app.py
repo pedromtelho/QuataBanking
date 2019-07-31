@@ -1,12 +1,13 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 # from QRreader import *
 import requests
 from datetime import datetime
+import access 
 
 
 key = "WAOpEqyHHL6iBASAssi1I63oP4VRxqjqafcJMzYo"
 app = Flask(__name__)
-url = "https://www.btgpactual.com/btgcode/api/money-movement"
+# url = "https://www.btgpactual.com/btgcode/api/money-movement"
 
 def conta(carteira):
     lista_bancos = ["banco1","banco2","banco3"]
@@ -37,10 +38,27 @@ def mainpage():
     global key
     lista_bancos = conta(key)
     banco, balance,nome = pega_dados(lista_bancos)
+
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if access.verifica(request.form['privateKey']):
+            return redirect(url_for('home'))        
+        else:
+            error = 'Chave inválida. Tente novamente.'            
+    return render_template('login.html', error=error)
+
+@app.route('/home')
+def home():
+    balance = 10000
+    daySpent = 0
     monthTransact = 0
     day = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
     templateData = {
-			'balance' : balance,
+			      'balance' : balance,
             'daySpent': 0,
             'monthTransact' : 0,
             'nome': nome
@@ -81,6 +99,7 @@ def mainpage():
 #         }
 
 #     return render_template('extract.html', extract=extract)
+
 
 @app.route('/boleto')
 def Boleto():
