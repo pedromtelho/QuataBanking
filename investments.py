@@ -11,7 +11,7 @@ def calcula_juros():
 	for banco in lista_bancos:
 		url = BASIC_URL + banco + '/orders/' + conta
 		headers = {
-			'x-api-key': conta,
+			'x-api-key': '6j7A1fN7buPWINRRD4HY9yo5SnqKAy',#conta,
 			'content-type': 'application/json'
 		}
 		res_invest = requests.get(url, headers=headers)
