@@ -66,12 +66,10 @@ def Invest():
     #Cada elemento dessa lista é um dicionario contendo uma aplicacao
     list_invest = inv.list_invest(account)
 
-    templateData = {
-        'list_all' : list_invest
-    }
-
-    print(list_invest)
-    return render_template('investimentos.html',results=templateData)
+    items = list_invest
+        
+    # print(list_invest)
+    return render_template('investimentos.html',items=items)
 
 
 if __name__ == "__main__":

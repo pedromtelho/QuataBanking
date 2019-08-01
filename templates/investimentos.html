@@ -1,38 +1,142 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    
-    <div class="content-wrap">
-        <div class="main">
-            <div class="container-fluid">
-                <section id="main-content">
-                    <div class="row">
-                        <div class="col-lg-12">
-
-                            <div class="card text-center">
-                                <div class="m-t-10">
-                                    <!-- BANCO DA APLICACAO -->
-                                    <!-- NOME DA APLICACAO -->
-                                    <!-- RISCO -->
-                                    <!-- TAXA -->
-                                    <!-- DATA DE EXPIRACAO -->
-                                </div>
-                            </div>
-                            
-
-                        </div>           
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2019 © QuataBanking. - <a href="#">www.quatabanking.com</a></p>
-                            </div>
+<div class="content-wrap">
+    <div class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 p-r-0 title-margin-right">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <h1>Investimentos</h1>
                         </div>
                     </div>
-                </section>
+                </div>
+                <!-- /# column -->
+                <div class="col-lg-4 p-l-0 title-margin-left">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Investimentos</a></li>
+                                <li class="breadcrumb-item active">Home</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </div>
-
-
+            <section id="main-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card text-center">
+                            <div class="m-t-10">
+                            <h5>Banco 1</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Risco</th>
+                                            <th scope="col">Validade</th>
+                                            <th scope="col">Taxa</th>
+                                            <th scope="col">Produto</th>
+                                            <th scope="col">Resgate</th>
+                                        </tr>
+                                    </thead>
+                                    {% for item in items%}
+                                        {% if item.bank == "banco1" %}
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ item.risk }}</td>
+                                                    <td>{{ item.expiryDate }}</td>
+                                                    <td>{{ item.tax }}</td>
+                                                    <td>{{ item.productName }}</td>
+                                                    <td>{{ item.redemptionDate }}</td>
+                                                </tr>
+                                            </tbody>
+                                        {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                    </div>           
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card text-center">
+                            <div class="m-t-10">
+                            <h5>Banco 2</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Risco</th>
+                                            <th scope="col">Validade</th>
+                                            <th scope="col">Taxa</th>
+                                            <th scope="col">Produto</th>
+                                            <th scope="col">Resgate</th>
+                                        </tr>
+                                    </thead>
+                                    {% for item in items%}
+                                        {% if item.bank == "banco2" %}
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ item.risk }}</td>
+                                                    <td>{{ item.expiryDate }}</td>
+                                                    <td>{{ item.tax }}</td>
+                                                    <td>{{ item.productName }}</td>
+                                                    <td>{{ item.redemptionDate }}</td>
+                                                </tr>
+                                            </tbody>
+                                        {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                    </div>           
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card text-center">
+                            <div class="m-t-10">
+                            <h5>Banco 3</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Risco</th>
+                                            <th scope="col">Validade</th>
+                                            <th scope="col">Taxa</th>
+                                            <th scope="col">Produto</th>
+                                            <th scope="col">Resgate</th>
+                                        </tr>
+                                    </thead>
+                                    {% for item in items%}
+                                        {% if item.bank == "banco3" %}
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ item.risk }}</td>
+                                                    <td>{{ item.expiryDate }}</td>
+                                                    <td>{{ item.tax }}</td>
+                                                    <td>{{ item.productName }}</td>
+                                                    <td>{{ item.redemptionDate }}</td>
+                                                </tr>
+                                            </tbody>
+                                        {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                    </div>           
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer">
+                            <p>2019 © QuataBanking. - <a href="#">www.quatabanking.com</a></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 {% endblock %}
