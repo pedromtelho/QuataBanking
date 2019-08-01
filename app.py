@@ -5,6 +5,7 @@ from datetime import datetime
 import access
 import investments as inv
 import data
+from json import dumps
 
 app = Flask(__name__)
 
@@ -12,8 +13,7 @@ name = ''
 amount = 0
 account = ''
 interest = 0
-
-
+templateData = {}
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -35,13 +35,13 @@ def login():
 
 @app.route('/home')
 def home():
+    global templateData
     balance = amount
     daySpent = 0
     monthTransact = 0
     monthInterest = interest
     day = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     nameClient = name[10:]
-
 
     templateData = {
         'balance' : balance,
@@ -58,8 +58,28 @@ def Boleto():
 
 @app.route('/transact')
 def Transact():
-	return render_template('transact.html')
+    error = None
+    headers = {
+        'x-api-key': account
+    }
+    if request.method == 'POST':
+        payload =  {
+            "Account": request.form['wallet'],
+            "Amount": request.form['value'],
+            "Desc": request.form['description']
+        }
 
+        data=dumps(payload)
+
+        transf = requests.post('https://www.btgpactual.com/btgcode/api/'+str(access.bank)+'/money-movement/transfer', headers=headers, data=data)
+        print(transf.text)
+        if transf.text == "Operação realizada com sucesso! $$$":
+            return redirect(url_for('home'))
+        elif transf.text == "Saldo insuficiente!":
+            error = "Saldo insuficiente!"
+        else:
+            error = 'verifique se as informações contidas no formulário estão corretas.'  
+    return render_template('transact.html', error=error, results=templateData)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
 import requests
 
+bank = ''
+
 def verifica(carteira):
+    global bank
     lista_bancos = ["banco1","banco2","banco3"]
     lista_responses = []
     for banco in lista_bancos:
@@ -14,6 +17,7 @@ def verifica(carteira):
 
         response = requests.get(url, headers=headers)
         if (response.json()) != "Acesso não encontrado":
+            bank = banco
             lista_responses.append(response.json()[0])
     if len(lista_responses)>0:
         return True
