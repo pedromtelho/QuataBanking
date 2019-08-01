@@ -54,28 +54,26 @@ def home():
 
 @app.route('/boleto')
 def Boleto():
-	return render_template('boleto.html')
+    return render_template('boleto.html')
 
-@app.route('/transact')
+@app.route('/transact', methods=['GET', 'POST'])
 def Transact():
     error = None
     headers = {
-        'x-api-key': account
+        'x-api-key': account,
+        'content-type': 'application/json'
     }
     if request.method == 'POST':
-        payload =  {
+        data =  {
             "Account": request.form['wallet'],
-            "Amount": request.form['value'],
+            "Amount": float(request.form['value']),
             "Desc": request.form['description']
         }
 
-        data=dumps(payload)
-
-        transf = requests.post('https://www.btgpactual.com/btgcode/api/'+str(access.bank)+'/money-movement/transfer', headers=headers, data=data)
-        print(transf.text)
-        if transf.text == "Operação realizada com sucesso! $$$":
+        transf = requests.post('https://www.btgpactual.com/btgcode/api/'+str(access.bank)+'/money-movement/transfer', headers=headers, json=data)
+        if transf.text == "\"Operação realizada com sucesso! $$$\"":
             return redirect(url_for('home'))
-        elif transf.text == "Saldo insuficiente!":
+        elif transf.text == "\"Saldo insuficiente!\"":
             error = "Saldo insuficiente!"
         else:
             error = 'verifique se as informações contidas no formulário estão corretas.'  
@@ -83,4 +81,4 @@ def Transact():
 
 
 if __name__ == "__main__":
-	app.run(debug=True)
+    app.run(debug=True)
