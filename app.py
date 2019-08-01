@@ -1,7 +1,9 @@
+# -*- coding:utf-8 -*-
 from flask import Flask, request, render_template, redirect, url_for
 import requests
 from datetime import datetime
-import access 
+import access
+import investments as inv
 import data
 
 app = Flask(__name__)
@@ -9,7 +11,6 @@ app = Flask(__name__)
 name = ''
 amount = 0
 account = ''
-
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -46,12 +47,17 @@ def home():
 
 @app.route('/boleto')
 def Boleto():
-    return render_template('boleto.html')
+	return render_template('boleto.html')
 
 @app.route('/transact')
 def Transact():
-    return render_template('transact.html')
+	return render_template('transact.html')
+
+@app.route('/juros')
+def Juros():
+	conta = 'WAOpEqyHHL6iBASAssi1I63oP4VRxqjqafcJMzYo'
+	return inv.calcula_juros(conta)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+	app.run(debug=True)

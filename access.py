@@ -1,4 +1,6 @@
+# -*- coding:utf-8 -*-
 import requests
+
 def verifica(carteira):
     lista_bancos = ["banco1","banco2","banco3"]
     lista_responses = []
