@@ -1,73 +1,48 @@
 from flask import Flask, request, render_template, redirect, url_for
-# from QRreader import *
 import requests
 from datetime import datetime
 import access 
+import data
 
 app = Flask(__name__)
-# url = "https://www.btgpactual.com/btgcode/api/money-movement"
 
+name = ''
+amount = 0
+account = ''
 
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
+    global name
+    global amount
+    global account
     error = None
     if request.method == 'POST':
         if access.verifica(request.form['privateKey']):
-            return redirect(url_for('home'))        
+            account = request.form['privateKey']
+            name = data.returnName(request.form['privateKey'])
+            amount = data.returnBalance(request.form['privateKey'])
+            return redirect(url_for('home'))  
         else:
             error = 'Chave inválida. Tente novamente.'            
     return render_template('login.html', error=error)
 
 @app.route('/home')
 def home():
-    balance = 10000
+    balance = amount
     daySpent = 0
     monthTransact = 0
     day = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    nameClient = name[10:]
+
 
     templateData = {
         'balance' : balance,
         'daySpent': daySpent,
-        'monthTransact' : monthTransact
+        'monthTransact' : monthTransact,
+        'name' : nameClient
     }
     return render_template('home.html', results=templateData)
-
-
-# @app.route('/extract', methods=['GET'])
-# def Extract():
-
-#     resultDesc = []
-#     resultAmount = []
-#     resultCPart = []
-#     resultData = []
-
-#     headers = {
-#     "x-api-key": "6j7A1fN7buPWINRRD4HY9yo5SnqKAyeUn5W9ZDwq"
-#     }
-#     r = requests.get('https://www.btgpactual.com/btgcode/api/money-movement', headers=headers)
-#     listJson = r.json()
-
-
-#     for j in listJson:
-#         for i, k in j.items():
-#             if i == "Desc":
-#                 resultDesc.append(str(k))
-#             if i == "Amount":
-#                 resultAmount.append(str(k))
-#             if i == "Counterpart":
-#                 resultCPart.append(str(k))
-#             if i == "CreatedAt":
-#                 resultData.append(str(k[8:10] + k[4:8] + k[0:4]))
-#         extract = {
-#             'wallet' : resultCPart,
-# 			'desc' : resultDesc,
-#             'data': resultData,
-#             'value' : resultAmount
-#         }
-
-#     return render_template('extract.html', extract=extract)
-
 
 @app.route('/boleto')
 def Boleto():
