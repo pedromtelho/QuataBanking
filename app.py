@@ -79,8 +79,8 @@ def Transact():
 
 @app.route('/juros')
 def Juros():
-	total = inv.calcula_juros()
-	return total
+	conta = 'WAOpEqyHHL6iBASAssi1I63oP4VRxqjqafcJMzYo'
+	return inv.calcula_juros(conta)
 
 
 if __name__ == "__main__":
