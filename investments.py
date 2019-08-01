@@ -4,6 +4,7 @@ import datetime
 
 BASIC_URL = 'https://www.btgpactual.com/btgcode/api/'
 
+LISTA_BANCOS = ["banco1","banco2","banco3"]
 
 def calcula_juros(conta):
 	headers = {
@@ -12,7 +13,6 @@ def calcula_juros(conta):
 	}
 
 	juros_total = 0
-	lista_bancos = ["banco1","banco2","banco3"]
 
 	ids_invest = []
 	tax_invest = []
@@ -21,7 +21,7 @@ def calcula_juros(conta):
 	ids_poup = []
 	tax_poup = []
 
-	for banco in lista_bancos:
+	for banco in LISTA_BANCOS:
 		url = BASIC_URL + banco + "/investment"
 		resp_value = requests.get(url, headers=headers)
 
@@ -34,7 +34,7 @@ def calcula_juros(conta):
 				ids_poup.append(actual_invest["id"])
 				tax_poup.append(actual_invest["tax"])
 
-	for banco in lista_bancos:
+	for banco in LISTA_BANCOS:
 		url = BASIC_URL + banco + '/orders/' + conta
 		res_invest = requests.get(url, headers=headers)
 
@@ -46,7 +46,7 @@ def calcula_juros(conta):
 			elif ((invest["discriminator"] == "investment") and (invest["idProduto"] in ids_poup)):
 				juros_total += calc_poupanca(float(invest["valor"]), float(tax_poup[ids_poup.index(invest["idProduto"])]), invest["data_ordem"])
 	
-	return str(juros_total)
+	return str(round(juros_total,2))
 
 
 def calc_poupanca(entrada, taxa, data):
@@ -71,3 +71,24 @@ def calc_invest(entrada, taxa, data_ord, data_exp):
 	total_ano = (exp_date.year - order_date.year)
 	
 	return (entrada * ((1 + taxa)**total_ano)) - entrada
+
+
+#As aplicacoes do tipo poupanca nao serao enviadas
+def list_invest(conta):
+	all_invest = []
+
+	headers = {
+		'x-api-key': conta,
+		'content-type': 'application/json'
+	}
+
+	for banco in LISTA_BANCOS:
+		url = BASIC_URL + banco + "/investment"
+		resp_value = requests.get(url, headers=headers)
+
+		for actual_invest in resp_value.json():
+			if (actual_invest["productName"] != "Poupanca"):
+				all_invest.append(actual_invest)
+	
+	return all_invest
+	
