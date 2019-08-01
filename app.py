@@ -60,6 +60,18 @@ def Boleto():
 def Transact():
 	return render_template('transact.html')
 
+@app.route('/invest')
+def Invest():
+    #Recebe uma lista com todas as aplicacoes disponiveis em todos os bancos
+    #Cada elemento dessa lista é um dicionario contendo uma aplicacao
+    list_invest = inv.list_invest(account)
+
+    templateData = {
+        'list_all' : list_invest
+    }
+
+    print(list_invest)
+    return render_template('investimentos.html',results=templateData)
 
 
 if __name__ == "__main__":
