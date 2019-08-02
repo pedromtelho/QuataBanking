@@ -5,6 +5,8 @@ BASIC_URL = 'https://www.btgpactual.com/btgcode/api/'
 
 
 def calcula_juros(conta):
+
+
 	headers = {
 		'x-api-key': conta,
 		'content-type': 'application/json'
@@ -31,5 +33,11 @@ def calcula_juros(conta):
 		for invest in res_invest.json():
 			if ((invest["discriminator"] == "investment") and (invest["idProduto"] in ids_invest)):
 				juros_total += float(invest["valor"]) * float(tax_invest[ids_invest.index(invest["idProduto"])])
+	
+	juros_liquido = str(juros_total)
+		
 				
-	return str(juros_total)
+	return juros_liquido
+
+
+print(calcula_juros('tuERPHixmI55KR0sEm32n1AF72mq1rJnaubqamc1'))
