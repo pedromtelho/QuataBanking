@@ -68,3 +68,25 @@ def deltaCorrente(key, Di, Df):
     delta = merge_dicts(inicial, final)
     return delta
 
+def DictPorct(Di):
+    df_n = {}
+    df_p = {}
+    d_n = {}
+    d_p = {}
+    for item in Di.items():
+        if item[1] < 0:
+            d_n[item[0]] = item[1]
+        else:
+            d_p[item[0]] = item[1]
+
+    total_p = sum(d_p.values())
+    total_n = sum(d_n.values())
+    for categorias in d_p.items():
+        df_p[categorias[0]] = categorias[1]/total_p
+
+    for categorias in d_n.items():
+        df_n[categorias[0]] = categorias[1]/total_n
+
+    return df_n, df_p
+
+print(DictPorct(gastoseparados("WAOpEqyHHL6iBASAssi1I63oP4VRxqjqafcJMzYo", "2019-05-06")))
