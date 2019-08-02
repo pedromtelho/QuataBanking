@@ -71,6 +71,23 @@
 ----------------------*/
 /*----------------font-------------------*/
 
+.butn {
+  -webkit-border-radius: 3;
+  -moz-border-radius: 3;
+  border-radius: 3px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 14px;
+  background: #41b0fa;
+  padding: 10px 40px 10px 40px;
+  text-decoration: none;
+}
+
+.butn:hover {
+  background: #373757;
+  text-decoration: none;
+}
+
 .table th {
   text-align: center;   
 }

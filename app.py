@@ -5,6 +5,7 @@ from datetime import datetime
 import access
 import investments as inv
 import data
+from json import dumps
 
 app = Flask(__name__)
 
@@ -12,8 +13,7 @@ name = ''
 amount = 0
 account = ''
 interest = 0
-
-
+templateData = {}
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -35,6 +35,7 @@ def login():
 
 @app.route('/home')
 def home():
+    global templateData
     balance = amount
     daySpent = 0
     monthTransact = 0
@@ -54,11 +55,30 @@ def home():
 
 @app.route('/boleto')
 def Boleto():
-	return render_template('boleto.html')
+    return render_template('boleto.html')
 
-@app.route('/transact')
+@app.route('/transact', methods=['GET', 'POST'])
 def Transact():
-	return render_template('transact.html')
+    error = None
+    headers = {
+        'x-api-key': account,
+        'content-type': 'application/json'
+    }
+    if request.method == 'POST':
+        data =  {
+            "Account": request.form['wallet'],
+            "Amount": float(request.form['value']),
+            "Desc": request.form['description']
+        }
+
+        transf = requests.post('https://www.btgpactual.com/btgcode/api/'+str(access.bank)+'/money-movement/transfer', headers=headers, json=data)
+        if transf.text == "\"Operação realizada com sucesso! $$$\"":
+            return redirect(url_for('home'))
+        elif transf.text == "\"Saldo insuficiente!\"":
+            error = "Saldo insuficiente!"
+        else:
+            error = 'verifique se as informações contidas no formulário estão corretas.'  
+    return render_template('transact.html', error=error, results=templateData)
 
 @app.route('/invest')
 def Invest():
@@ -73,4 +93,4 @@ def Invest():
 
 
 if __name__ == "__main__":
-	app.run(debug=True)
+    app.run(debug=True)
