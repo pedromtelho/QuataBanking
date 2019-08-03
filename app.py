@@ -1,11 +1,12 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, request, render_template, redirect, url_for
 import requests
-from datetime import datetime
+import datetime
 import access
 import investments as inv
 import data
 from json import dumps
+import saldo_corrente as saldos
 
 app = Flask(__name__)
 
@@ -40,8 +41,17 @@ def home():
     daySpent = 0
     monthTransact = 0
     monthInterest = interest
-    day = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    day = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     nameClient = name[10:]
+
+    now = datetime.datetime.today()
+    if (now.month == 1):
+        dataUse = str(now.year-1)+"-12"
+    elif (len(str(now.month-1)) == 1):
+        dateUse = str(now.year)+"-0"+str(now.month-1)
+    else:
+        dateUse = str(now.year)+"-"+str(now.month-1)
+    pMonthNeg, pMonthPlus = saldos.DictPorct(saldos.gastoseparadosMes(account,dateUse))
 
     templateData = {
         'balance' : balance,
@@ -50,7 +60,7 @@ def home():
         'name' : nameClient,
         'interest' : monthInterest
     }
-    return render_template('home.html', results=templateData)
+    return render_template('home.html', entradas=pMonthPlus, saidas=pMonthNeg, results=templateData)
 
 @app.route('/boleto')
 def Boleto():
