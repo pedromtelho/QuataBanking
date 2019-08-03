@@ -60,7 +60,7 @@ def calc_poupanca(entrada, taxa, data):
 
 def calc_invest(entrada, taxa, data_ord, data_exp):
 	now_date = datetime.datetime.today()
-	exp_date = datetime.datetime.strptime(data_exp, '%Y-%m-%dT%H:%M:%S.%fZ')
+	exp_date = datetime.datetime.strptime(data_exp, '%Y-%m-%d')
 
 	diff = ((now_date.year - exp_date.year) * 12) + (now_date.month - exp_date.month)
 	
