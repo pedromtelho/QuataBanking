@@ -7,6 +7,8 @@ import investments as inv
 import data
 from json import dumps
 import saldo_corrente as saldos
+import auto_invest
+import boleto as bo
 
 app = Flask(__name__)
 
@@ -15,6 +17,7 @@ amount = 0
 account = ''
 interest = 0
 templateData = {}
+investimento = float()
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -65,9 +68,16 @@ def home():
     }
     return render_template('home.html', entradas=pMonthPlus, saidas=pMonthNeg, results=templateData)
 
-@app.route('/boleto')
+@app.route('/boleto', methods=['GET','POST'])
 def Boleto():
-    return render_template('boleto.html')
+    status = None
+    if request.method == 'POST':
+        status = bo.pagaBoleto(account, float(request.form['value']), request.form['description'])
+    if status == True:
+        error = "Sucesso!"
+    else:
+        error = "Confira o formulario"
+    return render_template('boleto.html', status = error, results=templateData)
 
 @app.route('/extrato')
 def Extrato():
@@ -96,6 +106,31 @@ def Transact():
         else:
             error = 'verifique se as informações contidas no formulário estão corretas.'  
     return render_template('transact.html', error=error, results=templateData)
+
+@app.route('/Autoinvest', methods=['GET', 'POST'])
+def autoinvest():
+    global investimento
+    error = None
+    if request.method == 'POST':
+        month = request.form['month']
+        uso, investimento = auto_invest.auto_invest(account, month)
+        if uso == 0 and investimento == 0:  
+            error = 'data inválida. Tente novamente.'
+        else:
+            return redirect(url_for('Confirmation'))
+            # error = 'Este valor será investido'+str(investimento)+'deseja continuar?'
+    return render_template("autoinveste.html", error=error, results=templateData)
+
+
+@app.route('/confirm', methods=['GET', 'POST'])
+def Confirmation():
+    error = 'Este valor será investido: ' + 'R$' + str(investimento) + '. Deseja realizar o investimento?'
+    if request.method == 'POST':
+        auto_invest.investe_di(account, str(investimento))
+        return redirect(url_for('home'))
+
+    return render_template('confirmation.html', results=templateData, error=error)
+
 
 @app.route('/invest')
 def Invest():

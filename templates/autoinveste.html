@@ -8,7 +8,13 @@
                 <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Para fazer o pagamento de um boleto digite as informações necessárias abaixo.</h1>
+                            <h1>Bem vindo ao auto investidor!!</h1>
+                            <p>
+                                Essa plataforma tem o proposito de auxilia-lo(a) em seus investimentos. Basta escolher o mes 
+                                para a analise de gastos e o quanto deseja aplicar para o proximo mes. O algoritmo realizará uma previsão
+                                de quanto você pode investir sem mudar drasticamente seus hábitos.
+                            </p>
+                            <h2>Preencha o Formulário</h2>
                         </div>
                     </div>
                 </div>
@@ -17,7 +23,7 @@
                         <div class="page-header">
                             <div class="page-title">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Boleto</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Auto investidor</a></li>
                                     <li class="breadcrumb-item active">Home</li>
                                 </ol>
                             </div>
@@ -33,25 +39,19 @@
                     <div class="card text-center">
                         <form action="" method="POST">
                             <div class="m-t-10">
-                                <input type="text" class="form-control" name="wallet" placeholder="Conta" value="{{request.form.wallet}}">
+                                <input type="text" class="form-control" name="month" placeholder="YYYY-MM" value="{{request.form.month}}">
                             </div>
-                            <div class="m-t-10">
-                                <input type="number" min = "0" class="form-control" name="value" placeholder="Valor da transação" value="{{request.form.value}}">
-                            </div>
-                            <div class="m-t-10">
-                                <input type="text" class="form-control" name="description" placeholder="Tipo de Pagamento" value="{{request.form.description}}">
-                            </div>
-                            <input type="submit" class="butn" value = "Pagar">
-                            {% if status %}
-                                <p class="status"><strong>Status: </strong>{{ status }}</p>
+                            <input type="submit" class="butn" value = "Enviar">
+                            {% if error %}
+                                <p class="error"><strong>Erro: </strong>{{ error }}</p>
                             {% endif %}
                         </form>
                     </div>
                 </div>           
             </div>
-    
+
         </section>
         </div>
 </div>
 
-{% endblock %}
+{% endblock %} 
