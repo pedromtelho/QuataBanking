@@ -9,14 +9,13 @@ def merge_dicts(D1, D2):
     df={}
     for categoria in listaf:
         soma = 0
-        for e in D1:
-            if categoria in D1:
-                soma += D1[categoria]
-                df[categoria] = soma
-        for e in D2:
-            if categoria in D2:
-                soma += D2[categoria]
-                df[categoria] = soma
+        if categoria in D1:
+            soma += D1[categoria]
+            df[categoria] = soma
+       
+        if categoria in D2:
+            soma += D2[categoria]
+            df[categoria] = soma
     return df
 
 
@@ -46,15 +45,41 @@ def gastoseparados(key, D):
         data = fatura["CreatedAt"]
         #data = datetime.datetime.strptime(fatura["CreatedAt"], "%Y-%m-%dT%H:%M:%S")
         data = data[:10]
-        print(data)
+        #print(data)
 
         if data == D or D == "-1":
-            print("Foi")
+            #print("Foi")
             for categoria in lista_categorias:
                 soma=0
                 
                 if fatura["Desc"] == categoria:
-                    print(fatura["Desc"])
+                    #print(fatura["Desc"])
+                    soma += fatura["Amount"]
+                    dicionario_items[categoria] = soma
+    
+    return dicionario_items
+
+def gastoseparadosMes(key, M):
+    faturas = returnSaldoCorrente(key)
+    dicionario_items = {}
+    lista_categorias = []
+    for item in faturas:
+        lista_categorias.append(item["Desc"])
+    lista_categorias = set(lista_categorias)
+    for fatura in faturas:
+        tes = fatura["CreatedAt"]
+        data = fatura["CreatedAt"]
+        #data = datetime.datetime.strptime(fatura["CreatedAt"], "%Y-%m-%dT%H:%M:%S")
+        data = data[:7]
+        #print(data)
+
+        if data == M or M == "-1":
+            #print("Foi")
+            for categoria in lista_categorias:
+                soma=0
+                
+                if fatura["Desc"] == categoria:
+                    #print(fatura["Desc"])
                     soma += fatura["Amount"]
                     dicionario_items[categoria] = soma
     
@@ -89,4 +114,15 @@ def DictPorct(Di):
 
     return df_n, df_p
 
-print(DictPorct(gastoseparados("WAOpEqyHHL6iBASAssi1I63oP4VRxqjqafcJMzYo", "2019-05-06")))
+def separa_income(Di):
+    d_n = {}
+    d_p = {}
+    for item in Di.items():
+        if item[1] < 0:
+            d_n[item[0]] = item[1]
+        else:
+            d_p[item[0]] = item[1]
+
+    return d_p, d_n
+
+#print((gastoseparadosMes("tuERPHixmI55KR0sEm32n1AF72mq1rJnaubqamc1", "2019-05")))

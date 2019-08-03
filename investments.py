@@ -91,4 +91,3 @@ def list_invest(conta):
 				all_invest.append(actual_invest)
 	
 	return all_invest
-	
