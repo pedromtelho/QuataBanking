@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, Response
 import requests
 from datetime import datetime
 import access
@@ -12,7 +12,7 @@ import cv2
 import urllib.request
 from os import system, name
 from time import sleep 
-import QR as qr
+import auto_invest
 
 app = Flask(__name__)
 
@@ -21,6 +21,7 @@ amount = 0
 account = ''
 interest = 0
 templateData = {}
+investimento = float()
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -62,12 +63,32 @@ def home():
 
 @app.route('/boleto')
 def index():
-    if qr.pagaBoleto():
-        print("pago com sucesso")
-    else:
-        print("fudeu")
+    return render_template("boleto.html")
 
-    return render_template('boleto.html', results=templateData)
+@app.route('/Autoinvest', methods=['GET', 'POST'])
+def autoinvest():
+    global investimento
+    error = None
+    if request.method == 'POST':
+        month = request.form['month']
+        uso, investimento = auto_invest.auto_invest(account, month)
+        if uso == 0 and investimento == 0:  
+            error = 'data inválida. Tente novamente.'
+        else:
+            return redirect(url_for('Confirmation'))
+            # error = 'Este valor será investido'+str(investimento)+'deseja continuar?'
+    return render_template("autoinveste.html", error=error, results=templateData)
+
+@app.route('/confirm', methods=['GET', 'POST'])
+def Confirmation():
+    error = 'Este valor será investido: ' + 'R$' + str(investimento) + '. Deseja realizar o investimento?'
+    if request.method == 'POST':
+        auto_invest.investe_di(account, str(investimento))
+        return redirect(url_for('home'))
+        
+    return render_template('confirmation.html', results=templateData, error=error)
+    
+
 
 @app.route('/transact', methods=['GET', 'POST'])
 def Transact():
