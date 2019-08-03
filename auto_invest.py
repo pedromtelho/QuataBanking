@@ -31,4 +31,5 @@ def valor_a_ser_investido(positivo, negativo, porc):
 
 
 positivo, negativo = detecta_media("piDcR48aYV4L9EmhDECLN4eQGeKJsZ8312laCf6b", "2019-06")
-print(valor_a_ser_investido(positivo, negativo, 0.3))
+print(positivo, negativo)
+#print(valor_a_ser_investido(positivo, negativo, 0.3))

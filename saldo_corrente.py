@@ -125,4 +125,4 @@ def separa_income(Di):
 
     return d_p, d_n
 
-#print((gastoseparadosMes("tuERPHixmI55KR0sEm32n1AF72mq1rJnaubqamc1", "2019-05")))
+print(DictPorct(gastoseparadosMes("tuERPHixmI55KR0sEm32n1AF72mq1rJnaubqamc1", "2019-05")))

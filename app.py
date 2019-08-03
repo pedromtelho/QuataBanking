@@ -6,6 +6,13 @@ import access
 import investments as inv
 import data
 from json import dumps
+import pyzbar.pyzbar as pyzbar
+import numpy as np
+import cv2
+import urllib.request
+from os import system, name
+from time import sleep 
+import QR as qr
 
 app = Flask(__name__)
 
@@ -54,8 +61,13 @@ def home():
     return render_template('home.html', results=templateData)
 
 @app.route('/boleto')
-def Boleto():
-    return render_template('boleto.html')
+def index():
+    if qr.pagaBoleto():
+        print("pago com sucesso")
+    else:
+        print("fudeu")
+
+    return render_template('boleto.html', results=templateData)
 
 @app.route('/transact', methods=['GET', 'POST'])
 def Transact():
