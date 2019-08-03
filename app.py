@@ -51,7 +51,10 @@ def home():
         dateUse = str(now.year)+"-0"+str(now.month-1)
     else:
         dateUse = str(now.year)+"-"+str(now.month-1)
+
+    dateUse = "2019-08"
     pMonthNeg, pMonthPlus = saldos.DictPorct(saldos.gastoseparadosMes(account,dateUse))
+
 
     templateData = {
         'balance' : balance,
@@ -65,6 +68,11 @@ def home():
 @app.route('/boleto')
 def Boleto():
     return render_template('boleto.html')
+
+@app.route('/extrato')
+def Extrato():
+    dictExtract = saldos.list_all_extract(account)
+    return render_template('extract.html', dictExtract=dictExtract, results=templateData)
 
 @app.route('/transact', methods=['GET', 'POST'])
 def Transact():
