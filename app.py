@@ -5,10 +5,14 @@ import datetime
 import access
 import investments as inv
 import data
+import json
 from json import dumps
 import saldo_corrente as saldos
 import auto_invest
 import boleto as bo
+import cv2
+import numpy as np
+import pyzbar.pyzbar as pyzbar
 
 app = Flask(__name__)
 
@@ -18,6 +22,7 @@ account = ''
 interest = 0
 templateData = {}
 investimento = float()
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -68,16 +73,19 @@ def home():
     }
     return render_template('home.html', entradas=pMonthPlus, saidas=pMonthNeg, results=templateData)
 
+
+
 @app.route('/boleto', methods=['GET','POST'])
 def Boleto():
-    status = None
-    if request.method == 'POST':
-        status = bo.pagaBoleto(account, float(request.form['value']), request.form['description'])
-    if status == True:
-        error = "Sucesso!"
+    error = None
+    data = request.get_data()
+    print('BANCO: ' + str(access.bank))
+    transf = requests.post('https://www.btgpactual.com/btgcode/api/'+str(access.bank)+'/money-movement/pay', data=data)
+    if transf.text == "\"Operação realizada com sucesso! $$$\"":
+        return redirect(url_for('home'))
     else:
-        error = "Confira o formulario"
-    return render_template('boleto.html', status = error, results=templateData)
+        error = "QRcode inválido"
+    return render_template('boleto.html', results=templateData, error=error)
 
 @app.route('/extrato')
 def Extrato():

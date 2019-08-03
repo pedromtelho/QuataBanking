@@ -1,6 +1,48 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script type="text/javascript">
+
+    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+
+    scanner.addListener('scan', function (content) {
+
+    $.ajax({
+        method: "POST",
+        url: "/boleto",
+        data: content
+    })
+    .done(function(msg){
+          alert('Pagamento realizado com sucesso');
+     })
+     .fail(function(jqXHR, textStatus, msg){
+          alert(msg);
+     }); ;
+
+    });
+
+    Instascan.Camera.getCameras().then(function (cameras) {
+
+      if (cameras.length > 0) {
+
+        scanner.start(cameras[0]);
+
+      } else {
+
+        console.error('No cameras found.');
+
+      }
+
+    }).catch(function (e) {
+
+      console.error(e);
+
+    });
+
+</script>
 <div class="content-wrap">
     <div class="main">
         <div class="container-fluid">
@@ -8,7 +50,7 @@
                 <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Para fazer o pagamento de um boleto digite as informações necessárias abaixo.</h1>
+                            <h1>Para fazer o pagamento do boleto aproxime o QRcode.</h1>
                         </div>
                     </div>
                 </div>
@@ -28,27 +70,30 @@
             </div>
         </div>
         <section id="main-content">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card text-center">
-                        <form action="" method="POST">
-                            <div class="m-t-10">
-                                <input type="text" class="form-control" name="wallet" placeholder="Conta" value="{{request.form.wallet}}">
-                            </div>
-                            <div class="m-t-10">
-                                <input type="number" min = "0" class="form-control" name="value" placeholder="Valor da transação" value="{{request.form.value}}">
-                            </div>
-                            <div class="m-t-10">
-                                <input type="text" class="form-control" name="description" placeholder="Tipo de Pagamento" value="{{request.form.description}}">
-                            </div>
-                            <input type="submit" class="butn" value = "Pagar">
-                            {% if status %}
-                                <p class="status"><strong>Status: </strong>{{ status }}</p>
-                            {% endif %}
-                        </form>
-                    </div>
-                </div>           
-            </div>
+<div class="row">
+    <div class="col-lg-12">
+            <video id="video" width="800" height="600" autoplay></video>
+            {% if error %}
+                <p class="error"><strong>Erro: </strong>{{ error }}</p>
+            {% endif %}
+            <script>
+                // Grab elements, create settings, etc.
+var video = document.getElementById('video');
+
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        //video.src = window.URL.createObjectURL(stream);
+        video.srcObject = stream;
+        video.play();
+    });
+}
+            </script>
+    </div>
+</div>
+
+            
     
         </section>
         </div>
