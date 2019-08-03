@@ -87,7 +87,6 @@ def list_invest(conta):
 		resp_value = requests.get(url, headers=headers)
 
 		for actual_invest in resp_value.json():
-			if (actual_invest["productName"] != "Poupanca"):
-				all_invest.append(actual_invest)
+			all_invest.append(actual_invest)
 	
 	return all_invest
