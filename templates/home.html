@@ -27,7 +27,7 @@
                 <!-- /# row -->
                 <section id="main-content">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="card">
                                 <div class="stat-widget-two">
                                     <div class="stat-content">
@@ -41,15 +41,33 @@
                             </div>
                         </div>
                 
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="card">
                                 <div class="stat-widget-two">
                                     <div class="stat-content">
-                                        <div class="stat-text">Rendimentos das aplicações </div>
+                                        <div class="stat-text">Rendimentos das aplicações</div>
                                         <div class="stat-digit"> <i class="fa fa-usd"></i>{{results.interest}}</div>
                                     </div>
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-success w-100" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="stat-widget-two">
+                                    <div class="stat-content">
+                                        <div class="stat-text">Juros sobre empréstimos</div>
+                                        <div class="stat-digit"> <i class="fa fa-usd"></i>{{results.loans}}</div>
+                                    </div>
+                                    <div class="progress">
+                                        {% if results.loans == 0 %}
+                                            <div class="progress-bar progress-bar-success w-100" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                        {% else %}
+                                            <div class="progress-bar bg-danger w-100" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

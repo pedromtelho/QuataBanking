@@ -9,6 +9,7 @@ from json import dumps
 import saldo_corrente as saldos
 import auto_invest
 import boleto as bo
+import loans
 
 app = Flask(__name__)
 
@@ -16,6 +17,7 @@ name = ''
 amount = 0
 account = ''
 interest = 0
+loan = 0
 templateData = {}
 investimento = float()
 
@@ -32,6 +34,7 @@ def login():
             name = data.returnName(request.form['privateKey'])
             amount = data.returnBalance(request.form['privateKey'])
             interest = inv.calcula_juros(account)
+            loan = loans.calcula_loan(account)
             return redirect(url_for('home'))  
         else:
             error = 'Chave inválida. Tente novamente.'            
@@ -46,6 +49,7 @@ def home():
     monthInterest = interest
     day = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     nameClient = name[10:]
+    monthLoan = loan
 
     now = datetime.datetime.today()
     if (now.month == 1):
@@ -55,7 +59,6 @@ def home():
     else:
         dateUse = str(now.year)+"-"+str(now.month-1)
 
-    dateUse = "2019-08"
     pMonthNeg, pMonthPlus = saldos.DictPorct(saldos.gastoseparadosMes(account,dateUse))
 
 
@@ -64,7 +67,8 @@ def home():
         'daySpent': daySpent,
         'monthTransact' : monthTransact,
         'name' : nameClient,
-        'interest' : monthInterest
+        'interest' : monthInterest,
+        'loans' : monthLoan
     }
     return render_template('home.html', entradas=pMonthPlus, saidas=pMonthNeg, results=templateData)
 
@@ -131,7 +135,6 @@ def Confirmation():
 
     return render_template('confirmation.html', results=templateData, error=error)
 
-
 @app.route('/invest')
 def Invest():
     #Recebe uma lista com todas as aplicacoes disponiveis em todos os bancos
@@ -139,10 +142,8 @@ def Invest():
     list_invest = inv.list_invest(account)
 
     items = list_invest
-        
-    # print(list_invest)
-    return render_template('investimentos.html',items=items, results=templateData)
 
+    return render_template('investimentos.html',items=items, results=templateData)
 
 if __name__ == "__main__":
     app.run(debug=True)
