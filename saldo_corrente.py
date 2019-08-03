@@ -107,10 +107,10 @@ def DictPorct(Di):
     total_p = sum(d_p.values())
     total_n = sum(d_n.values())
     for categorias in d_p.items():
-        df_p[categorias[0]] = categorias[1]/total_p
+        df_p[categorias[0]] = str(round((100*categorias[1]/total_p),2))
 
     for categorias in d_n.items():
-        df_n[categorias[0]] = categorias[1]/total_n
+        df_n[categorias[0]] = str(round((100*categorias[1]/total_n),2))
 
     return df_n, df_p
 
@@ -126,3 +126,28 @@ def separa_income(Di):
     return d_p, d_n
 
 #print((gastoseparadosMes("tuERPHixmI55KR0sEm32n1AF72mq1rJnaubqamc1", "2019-05")))
+
+
+def list_all_extract(conta):
+    lista_all = []
+    lista_bancos = ["banco1","banco2","banco3"]
+    for banco in lista_bancos:
+        url = "http://www.btgpactual.com/btgcode/api/" + banco + "/money-movement/" + conta
+
+        headers = {
+            'x-api-key': conta,
+            'content-type': 'application/json'
+        }
+        resp_value = requests.get(url, headers=headers)
+        
+        for item in resp_value.json():
+            temp = item["CreatedAt"][8:10]
+            temp += "-"
+            temp += item["CreatedAt"][5:7]
+            temp += "-"
+            temp += item["CreatedAt"][0:4]
+            item["CreatedAt"] = temp
+
+            lista_all.append(item)
+    
+    return lista_all
