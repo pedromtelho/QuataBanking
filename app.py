@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import boleto as bo
 from flask import Flask, request, render_template, redirect, url_for
 import requests
 from datetime import datetime
@@ -53,9 +54,16 @@ def home():
     }
     return render_template('home.html', results=templateData)
 
-@app.route('/boleto')
+@app.route('/boleto', methods=['GET','POST'])
 def Boleto():
-    return render_template('boleto.html')
+    status = None
+    if request.method == 'POST':
+      status = bo.pagaBoleto(account, float(request.form['value']), request.form['description'])
+      if status == True:
+        error = "Sucesso!"
+      else:
+        error = "Confira o formulario"
+    return render_template('boleto.html', status = error)
 
 @app.route('/transact', methods=['GET', 'POST'])
 def Transact():
