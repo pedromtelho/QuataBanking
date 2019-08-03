@@ -43,7 +43,6 @@ def home():
     day = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     nameClient = name[10:]
 
-
     templateData = {
         'balance' : balance,
         'daySpent': daySpent,
@@ -89,7 +88,7 @@ def Invest():
     items = list_invest
         
     # print(list_invest)
-    return render_template('investimentos.html',items=items)
+    return render_template('investimentos.html',items=items, results=templateData)
 
 
 if __name__ == "__main__":
