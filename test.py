@@ -1,32 +1,27 @@
-import requests
-import datetime
-
-d1 = "2019-06-31T05:33:17"
-d2 = '2019-06-30T05:33:17'
+import saldo_corrente as saldos
 
 
-data = datetime.datetime.strptime(d2, "%Y-%m-%dT%H:%M:%S")
-print(data)
 
-d1 = {"a":1,"b":2}
-d2 = {"a":10,"b":2, "c":1}
+#[['Chrome', 58.9], ["oi", 30]]
+"2019-06"
+
+def DictPorct(Di):
+    d_n = {}
+    total_n = sum(Di.values())
+
+    for categorias in Di.items():
+        d_n[categorias[0]] = str(round((100*categorias[1]/total_n),2))
+
+    return d_n
 
 
-def merge_dicts(D1, D2):
-    lista1 = list(D1.keys())
-    lista2 = list(D2.keys())
-    listaf = set(lista1 + lista2)
-    df={}
-    for categoria in listaf:
-        soma = 0
-        for e in D1:
-            if categoria in D1:
-                soma += D1[categoria]
-                df[categoria] = soma
-        for e in D2:
-            if categoria in D2:
-                soma += D2[categoria]
-                df[categoria] = soma
-    return df
+def pie(key, mes):
+    d_p, d_n = saldos.separa_income(saldos.gastoseparadosMes(key, mes))
+    d_o = DictPorct(d_n)
+    array = []
+    for item in d_o.items():
+        array.append([item[0],float(item[1])])
+    return array
 
-print(merge_dicts(d1, d2))
+
+print(pie("WAOpEqyHHL6iBASAssi1I63oP4VRxqjqafcJMzYo" ,"2019-06"))

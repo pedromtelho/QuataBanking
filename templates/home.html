@@ -55,23 +55,30 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row">
+                    <div class="row">
                         <div class="col-lg-12">
                             <div class="card text-center">
-                                <div class="m-t-10">
-                                    <p>Feedback financeiro de transações</p>
-                                    <h5>{{results.monthTransact}} durante o mês</h5>
+                                <div class="m-t-10"  align="center">
+                                    <div id={{ results.chart.chartID|safe }} class="chart" style="height: 500px; width: 500px"></div>
                                 </div>
-                                <div class="widget-card-circle pr m-t-20 m-b-20" id="info-circle-card">
-                                    <i class="ti-control-shuffle pa"></i>
-                                </div>
-                                <ul class="widget-line-list m-b-15">
-                                    <li class="border-right">92% <br><span class="color-success"><i class="ti-hand-point-up"></i> Positivo</span></li>
-                                    <li>8% <br><span class="color-danger"><i class="ti-hand-point-down"></i>Negativo</span></li>
-                                </ul>
-                            </div>
-                        </div>           
-                    </div> -->
+                        </div>
+                    </div>
+                        
+
+                        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+                        <script src="http://code.highcharts.com/highcharts.js"></script>-->
+                        <script>
+                            var chart_id = {{ results.chart.chartID|safe }};
+                            var series = {{ results.chart.series|safe }};
+                            var title = {{ results.chart.title|safe }};
+                            var xAxis = {{ results.chart.xAxis|safe }};
+                            var yAxis = {{ results.chart.yAxis|safe }};
+                            var chart = {{ results.chart.chart|safe }};
+                        </script>
+                        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+                        <script src="http://code.highcharts.com/highcharts.js"></script>
+                        <script src="../static/js/scripts.js"></script>
+                    </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer">

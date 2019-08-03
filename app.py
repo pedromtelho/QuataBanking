@@ -19,6 +19,25 @@ interest = 0
 templateData = {}
 investimento = float()
 
+def DictPorcte(Di):
+    d_n = {}
+    total_n = sum(Di.values())
+
+    for categorias in Di.items():
+        d_n[categorias[0]] = str(round((100*categorias[1]/total_n),2))
+
+    return d_n
+
+
+def pie(key, mes):
+    d_p, d_n = saldos.separa_income(saldos.gastoseparadosMes(key, mes))
+    d_o = DictPorcte(d_n)
+    array = []
+    for item in d_o.items():
+        array.append([item[0],float(item[1])])
+    return array
+
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     global name
@@ -58,15 +77,26 @@ def home():
     dateUse = "2019-08"
     pMonthNeg, pMonthPlus = saldos.DictPorct(saldos.gastoseparadosMes(account,dateUse))
 
-
+    chartData = index()
+    #print("PAU NO SEU CU: " + str(index()))
     templateData = {
         'balance' : balance,
         'daySpent': daySpent,
         'monthTransact' : monthTransact,
         'name' : nameClient,
-        'interest' : monthInterest
+        'interest' : monthInterest,
+        'chart': chartData
     }
+    
     return render_template('home.html', entradas=pMonthPlus, saidas=pMonthNeg, results=templateData)
+
+def index(chartID = 'chart_ID', chart_type = 'pie', chart_height = 350):
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+    series = [{"name": 'Label1', "data": pie(account, "2019-06")}]
+    title = {"text": 'Gasto'}
+    xAxis = {"categories": list(saldos.gastoseparadosMes(account,"2019-06").keys())}
+    yAxis = {"title": {"text": 'yAxis Label'}}
+    return { "chartID": 'expensesChart' , "chart": chart, "series": series, "title": title, "xAxis": xAxis, "yAxis": yAxis}
 
 @app.route('/boleto', methods=['GET','POST'])
 def Boleto():
