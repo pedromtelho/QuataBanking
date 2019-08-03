@@ -87,6 +87,14 @@ def list_invest(conta):
 		resp_value = requests.get(url, headers=headers)
 
 		for actual_invest in resp_value.json():
+			if (actual_invest["productName"] != "Poupanca"):
+				temp = actual_invest["expiryDate"][8:]
+				temp += "-"
+				temp += actual_invest["expiryDate"][5:7]
+				temp += "-"
+				temp += actual_invest["expiryDate"][0:4]
+				actual_invest["expiryDate"] = temp
+				
 			all_invest.append(actual_invest)
 	
 	return all_invest
